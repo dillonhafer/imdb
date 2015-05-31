@@ -58,7 +58,8 @@ func main() {
 
 	if id != "" && file_path != "" && format != "" {
 		m := FindMovie(id)
-		fmt.Printf("Running: AtomicParsley %s.%s %s", file_path, format, m.ParsleyFlags())
+		fmt.Printf("When this works it will run:\n")
+		fmt.Printf("AtomicParsley %s.%s %s", file_path, format, m.ParsleyFlags())
 	} else {
 		flag.Usage()
 	}
