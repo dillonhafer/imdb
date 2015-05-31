@@ -2,7 +2,11 @@
 
 A simple way to set ID3 info tags for movies in iTunes.
 
-This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.com/) for use with [AtomicParsley](http://atomicparsley.sourceforge.net/)
+This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.com/) for use with [AtomicParsley](http://atomicparsley.sourceforge.net/).
+
+### Dependencies
+
+Right now you need to download and have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
 
 ### Usage
 
