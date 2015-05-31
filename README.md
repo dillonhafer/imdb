@@ -1,6 +1,6 @@
 # IMDB
 
-A simple way to set ID3 info tags for movies in iTunes.
+A simple and automatic way to set ID3 info tags for movies in iTunes, including artwork.
 
 This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.com/) for use with [AtomicParsley](http://atomicparsley.sourceforge.net/).
 
