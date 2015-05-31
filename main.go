@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -18,6 +19,7 @@ type Movie struct {
 	Year     string
 	Plot     string
 	Genre    string
+	Poster   string
 }
 
 type Tagger struct {
@@ -68,10 +70,43 @@ func (t *Tagger) TempId() string {
 	return file_id
 }
 
+func (t *Tagger) GetArtwork() {
+	if t.Movie.Poster != "" {
+		fmt.Printf("Downloading artwork...\n")
+		file, err := os.Create("artwork.jpg")
+		defer file.Close()
+
+		check := http.Client{
+			CheckRedirect: func(r *http.Request, via []*http.Request) error {
+				r.URL.Opaque = r.URL.Path
+				return nil
+			},
+		}
+
+		resp, err := check.Get(t.Movie.Poster) // add a filter to check redirect
+		if err != nil {
+			fmt.Println(err)
+			panic(err)
+		}
+		defer resp.Body.Close()
+		io.Copy(file, resp.Body)
+
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
 func (t *Tagger) AtomicCommand() error {
 	file_path := fmt.Sprintf("%s.%s", t.FilePath, t.Format)
 	file_args := []string{file_path}
 	args := append(file_args, t.Movie.ParsleyFlags()...)
+
+	if t.Movie.Poster != "" {
+		artwork := []string{"--artwork", "REMOVE_ALL", "--artwork", "artwork.jpg"}
+		args = append(args, artwork...)
+	}
+
 	_, err := exec.Command("AtomicParsley", args...).Output()
 	return err
 }
@@ -79,11 +114,15 @@ func (t *Tagger) AtomicCommand() error {
 func (t *Tagger) CleanupCommand() error {
 	old_file := fmt.Sprintf("%s%s.%s", t.FilePath, t.TempId(), t.Format)
 	new_file := fmt.Sprintf("%s.%s", t.FilePath, t.Format)
+	os.Remove("artwork.jpg")
 	return os.Rename(old_file, new_file)
 }
 
 func (t *Tagger) SetTags() {
+	t.GetArtwork()
+	fmt.Printf("Setting tags...\n")
 	t.AtomicCommand()
+	fmt.Printf("Cleaning up tmp files...\n")
 	t.CleanupCommand()
 }
 
