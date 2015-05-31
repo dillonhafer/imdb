@@ -1,7 +1,7 @@
-# imdb
+# IMDB
 Get IMDB info for use in AtomicParsley
 
-# Usage
+### Usage
 
 This assumes there's a file called "DOLPHINE_TALE.m4v" in the current directory.
 
