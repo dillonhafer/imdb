@@ -56,7 +56,7 @@ func (t *Tagger) GetArtwork() {
 }
 
 func (t *Tagger) AtomicCommand() error {
-	file_path := fmt.Sprintf("%s.%s", t.FilePath, t.Format)
+	file_path := fmt.Sprintf("%s%s", t.FilePath, t.Format)
 	file_args := []string{file_path}
 	args := append(file_args, t.Movie.ParsleyFlags()...)
 
@@ -70,8 +70,8 @@ func (t *Tagger) AtomicCommand() error {
 }
 
 func (t *Tagger) CleanupCommand() error {
-	old_file := fmt.Sprintf("%s%s.%s", t.FilePath, t.TempId(), t.Format)
-	new_file := fmt.Sprintf("%s.%s", t.FilePath, t.Format)
+	old_file := fmt.Sprintf("%s%s%s", t.FilePath, t.TempId(), t.Format)
+	new_file := fmt.Sprintf("%s%s", t.FilePath, t.Format)
 	os.Remove("artwork.jpg")
 	return os.Rename(old_file, new_file)
 }

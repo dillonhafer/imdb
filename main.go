@@ -30,14 +30,12 @@ func main() {
 			given_file := c.Args()[0]
 			base := path.Base(given_file)
 			format = path.Ext(given_file)
+
 			file = base[:len(base)-len(format)]
 			id = c.String("id")
 		}
 
 		if id != "" && file != "" && format != "" {
-			println(id)
-			println(file)
-			println(format)
 			m := FindMovie(id)
 			t := &Tagger{Movie: m, Format: format, FilePath: file}
 			t.SetTags()
