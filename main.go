@@ -28,8 +28,8 @@ func (m *Movie) ApiUrl() string {
 	return fmt.Sprintf(url, m.Id)
 }
 
-func (m *Movie) ParsleyFlags() {
-	fmt.Printf("--title \"%s\" --artist \"%s\" --year \"%s\" --description \"%s\" --genre \"%s\"", m.Title, m.Director, m.Year, m.Plot, m.Genre)
+func (m *Movie) ParsleyFlags() string {
+	return fmt.Sprintf("--title \"%s\" --artist \"%s\" --year \"%s\" --description \"%s\" --genre \"%s\"", m.Title, m.Director, m.Year, m.Plot, m.Genre)
 }
 
 type Movie struct {
@@ -49,11 +49,17 @@ func FindMovie(id string) Movie {
 
 func main() {
 	var id string
-	flag.StringVar(&id, "id", "", "IMDB ID of movie. (e.g. tt1564349)")
+	var file_path string
+	var format string
+	flag.StringVar(&id, "id", "", "IMDB ID of movie (e.g. tt1564349)")
+	flag.StringVar(&file_path, "file", "", "Path to video file")
+	flag.StringVar(&format, "format", "m4v", "File format of video file (defaults to m4v)")
 	flag.Parse()
 
-	if id != "" {
+	if id != "" && file_path != "" && format != "" {
 		m := FindMovie(id)
-		m.ParsleyFlags()
+		fmt.Printf("Running: AtomicParsley %s.%s %s", file_path, format, m.ParsleyFlags())
+	} else {
+		flag.Usage()
 	}
 }
