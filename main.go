@@ -28,28 +28,32 @@ func (m *Movie) ApiUrl() string {
 	return fmt.Sprintf(url, m.Id)
 }
 
-func (m *Movie) Info() {
-	m.GetImdbInfo()
-	fmt.Printf("--title \"%s\"\n", m.Title)
+func (m *Movie) ParsleyFlags() {
+	fmt.Printf("--title \"%s\" --artist \"%s\" --year \"%s\" --description \"%s\" --genre \"%s\"", m.Title, m.Director, m.Year, m.Plot, m.Genre)
 }
 
 type Movie struct {
-	Id          string
-	Title       string
-	Director    string
-	Year        string
-	Description string
-	Genre       string
+	Id       string
+	Title    string
+	Director string
+	Year     string
+	Plot     string
+	Genre    string
+}
+
+func FindMovie(id string) Movie {
+	m := Movie{Id: id}
+	m.GetImdbInfo()
+	return m
 }
 
 func main() {
 	var id string
-
 	flag.StringVar(&id, "id", "", "IMDB ID of movie. (e.g. tt1564349)")
 	flag.Parse()
 
 	if id != "" {
-		m := Movie{Id: id}
-		m.Info()
+		m := FindMovie(id)
+		m.ParsleyFlags()
 	}
 }
