@@ -16,6 +16,14 @@ type Tagger struct {
 	Format   string
 }
 
+func (t *Tagger) FullFileName() string {
+	return fmt.Sprintf("%s%s", t.FilePath, t.Format)
+}
+
+func (t *Tagger) TmpFileName() string {
+	return fmt.Sprintf("%s%s%s", t.FilePath, t.TempId(), t.Format)
+}
+
 func (t *Tagger) TempId() string {
 	var file_id string
 	pwd, _ := os.Getwd()
@@ -57,8 +65,7 @@ func (t *Tagger) GetArtwork() {
 }
 
 func (t *Tagger) AtomicCommand() error {
-	file_path := fmt.Sprintf("%s%s", t.FilePath, t.Format)
-	file_args := []string{file_path}
+	file_args := []string{t.FullFileName()}
 	args := append(file_args, t.Movie.ParsleyFlags()...)
 
 	if t.Movie.Poster != "" {
@@ -70,11 +77,9 @@ func (t *Tagger) AtomicCommand() error {
 	return err
 }
 
-func (t *Tagger) CleanupCommand() error {
-	old_file := fmt.Sprintf("%s%s%s", t.FilePath, t.TempId(), t.Format)
-	new_file := fmt.Sprintf("%s%s", t.FilePath, t.Format)
+func (t *Tagger) CleanupCommand() {
 	os.Remove("artwork.jpg")
-	return os.Rename(old_file, new_file)
+	os.Rename(t.TmpFileName(), t.FullFileName())
 }
 
 func (t *Tagger) SetTags() {
