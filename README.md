@@ -23,5 +23,7 @@ If you don't want to open a browser and look for the IMDB Id manually, you can s
 This makes it convient to run commands like:
 
 ```bash
-HandBrakeCLI -i /Volumes/DVD/VIDEO_TS -o dolphin_tale.m4v && imdb -i tt1564349 dolphin_tale.m4v
+#!/bin/bash
+movie="dolphin_tale.m4v"
+HandBrakeCLI -i /Volumes/DVD/VIDEO_TS -o $movie && imdb -i tt1564349 $movie
 ```
