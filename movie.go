@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 type Movie struct {
@@ -29,13 +30,17 @@ func (m *Movie) GetImdbInfo(url string) {
 }
 
 func (m *Movie) ApiUrl() string {
-	url := "http://www.omdbapi.com/?i=%s&plot=short&r=json"
-	return fmt.Sprintf(url, m.Id)
+	query := fmt.Sprintf("i=%s&plot=short&r=json", m.Id)
+	return BaseApi(query)
 }
 
 func (m *Movie) SearchApiUrl() string {
-	url := "http://www.omdbapi.com/?t=%s&plot=short&r=json"
-	return fmt.Sprintf(url, m.Title)
+	query := fmt.Sprintf("t=%s&plot=short&r=json", url.QueryEscape(m.Title))
+	return BaseApi(query)
+}
+
+func BaseApi(q string) string {
+	return fmt.Sprintf("http://www.omdbapi.com/?%s", q)
 }
 
 func (m *Movie) ParsleyFlags() []string {
