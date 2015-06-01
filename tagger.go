@@ -38,7 +38,7 @@ func (t *Tagger) TempId() string {
 }
 
 func (t *Tagger) GetArtwork() {
-	if t.Movie.Poster != "" {
+	if t.Movie.HasArtwork() {
 		fmt.Printf("Downloading artwork...\n")
 		file, err := os.Create("artwork.jpg")
 		defer file.Close()
@@ -50,7 +50,7 @@ func (t *Tagger) GetArtwork() {
 			},
 		}
 
-		resp, err := check.Get(t.Movie.Poster) // add a filter to check redirect
+		resp, err := check.Get(t.Movie.ArtworkUrl) // add a filter to check redirect
 		if err != nil {
 			fmt.Println(err)
 			panic(err)
@@ -68,7 +68,7 @@ func (t *Tagger) AtomicCommand() error {
 	file_args := []string{t.FullFileName()}
 	args := append(file_args, t.Movie.ParsleyFlags()...)
 
-	if t.Movie.Poster != "" {
+	if t.Movie.HasArtwork() {
 		artwork := []string{"--artwork", "REMOVE_ALL", "--artwork", "artwork.jpg"}
 		args = append(args, artwork...)
 	}
