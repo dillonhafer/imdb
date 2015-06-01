@@ -8,6 +8,8 @@ This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.co
 
 Right now you need to download and have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
 
+You can download AtomicParsley with: `imdb atomic`
+
 ### Usage
 
 This assumes there's a file called "DOLPHINE_TALE.m4v" in the current directory.
