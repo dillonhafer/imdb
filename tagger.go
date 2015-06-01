@@ -18,7 +18,8 @@ type Tagger struct {
 
 func (t *Tagger) TempId() string {
 	var file_id string
-	files, _ := ioutil.ReadDir("./")
+	pwd, _ := os.Getwd()
+	files, _ := ioutil.ReadDir(pwd)
 	for _, f := range files {
 		r, _ := regexp.Compile("-temp-([0-9]+)")
 		if r.MatchString(f.Name()) {
