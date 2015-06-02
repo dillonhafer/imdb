@@ -24,6 +24,36 @@
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e4ef', endColorstr='#86aecc',GradientType=0 ); /* IE6-9 */
       }
       a.btn { font-family: Helvetica, serif; }
+      .typed-cursor {
+        opacity: 1;
+        -webkit-animation: blink 0.7s infinite;
+        -moz-animation: blink 0.7s infinite;
+        animation: blink 0.7s infinite;
+      }
+      @keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+      }
+      @-webkit-keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+      }
+      @-moz-keyframes blink{
+        0% { opacity:1; }
+        50% { opacity:0; }
+        100% { opacity:1; }
+      }
+      .pre {
+        font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 10px;
+        width: 450px;
+        border-radius: 5px;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
@@ -31,6 +61,10 @@
       <div class='text-center'>
         <h1>IMDB Tags</h1>
         <h3>A simple and automatic way to set movie tags from IMDB, including artwork.</h3>
+
+        <div class='text-left pre'>
+          $ <span class='command-box'></span>
+        </div>
         <img src="/cover.png" />
       </div>
 
@@ -63,6 +97,16 @@
       <div class='text-center'>
         <a href="https://github.com/dillonhafer/imdb-tags" target="_blank"><span class="glyphicon glyphicon-console"></span> Documentation/Source</a>
       </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <script src="/typed.js"></script>
+      <script>
+        $(function(){
+          $(".command-box").typed({
+            strings: ["imdb-tags -i tt1865505 song_of_the_sea.m4v"],
+            typeSpeed: 175
+          });
+        });
+      </script>
     </div>
   </body>
 </html>
