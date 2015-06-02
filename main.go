@@ -11,7 +11,7 @@ const VERSION = "0.0.2"
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "imdb"
+	app.Name = "imdb-tags"
 	app.Usage = "Import ID3 tags from IMDB"
 	app.Version = VERSION
 	app.Author = "Dillon Hafer"
