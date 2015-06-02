@@ -1,4 +1,4 @@
-#!/downloads/bash
+#!/bin/bash
 VERSION=$(grep -oEi "VERSION = \"[^\"]+" main.go | sed s/VERSION\ =\ \"//)
 rm -r downloads
 mkdir -p downloads
