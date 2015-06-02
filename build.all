@@ -1,0 +1,35 @@
+#!/bin/bash
+VERSION=$(grep -oEi "VERSION = \"[^\"]+" main.go | sed s/VERSION\ =\ \"//)
+rm -r bin
+mkdir -p bin
+echo "Building $VERSION"
+
+echo "Starting linux-32"
+GOOS=linux GOARCH=386 go build -o imdb-tags
+tar -zcf bin/linux-32-$VERSION.tar.gz imdb-tags
+rm imdb-tags
+echo "Done."
+
+echo "Starting linux-64"
+GOOS=linux GOARCH=amd64 go build -o imdb-tags
+tar -zcf bin/linux-64-$VERSION.tar.gz imdb-tags
+rm imdb-tags
+echo "Done."
+
+echo "Starting windows-32"
+GOOS=windows GOARCH=386 go build -o imdb-tags.exe
+tar -zcf bin/windows-32-$VERSION.tar.gz imdb-tags.exe
+rm imdb-tags.exe
+echo "Done."
+
+echo "Starting windows-64"
+GOOS=windows GOARCH=amd64 go build -o imdb-tags.exe
+tar -zcf bin/windows-64-$VERSION.tar.gz imdb-tags.exe
+rm imdb-tags.exe
+echo "Done."
+
+echo "Starting osx"
+go build -o imdb-tags
+tar -zcf bin/osx-$VERSION.tar.gz imdb-tags
+rm imdb-tags
+echo "Done."
