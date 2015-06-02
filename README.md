@@ -8,7 +8,7 @@ This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.co
 
 ### Dependencies
 
-Right now you need to download and have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
+You must have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
 
 You can download AtomicParsley with: `imdb-tags atomic`
 
