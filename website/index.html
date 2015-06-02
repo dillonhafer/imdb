@@ -1,24 +1,58 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IMDB Tags</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <style>
+      img { max-width: 100%; }
+      body {
+        padding-bottom: 50px;
+        background: rgb(212,228,239); /* Old browsers */
+        background: -moz-linear-gradient(top, rgba(212,228,239,1) 0%, rgba(134,174,204,1) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(212,228,239,1)), color-stop(100%,rgba(134,174,204,1))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, rgba(212,228,239,1) 0%,rgba(134,174,204,1) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, rgba(212,228,239,1) 0%,rgba(134,174,204,1) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, rgba(212,228,239,1) 0%,rgba(134,174,204,1) 100%); /* IE10+ */
+        background: linear-gradient(to bottom, rgba(212,228,239,1) 0%,rgba(134,174,204,1) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e4ef', endColorstr='#86aecc',GradientType=0 ); /* IE6-9 */
+      }
+    </style>
   </head>
   <body>
-    <h1>IMDB Tags</h1>
+    <div class='container'>
+      <div class='text-center'>
+        <h1>IMDB Tags</h1>
+        <h3>A simple and automatic way to set movie tags from IMDB, including artwork.</h3>
+        <img src="/cover.png" />
+      </div>
 
-    <h2>OSX</h2>
-    <li><a href="/downloads/osx-0.1.0.tar.gz" target="_blank">OSX 64-bit</a></li>
+      <br />
+      <br />
+      <br />
 
-    <h2>Linux</h2>
-    <li><a href="/downloads/linux-32-0.1.0.tar.gz" target="_blank">Linux 32-bit</a></li>
-    <li><a href="/downloads/linux-64-0.1.0.tar.gz" target="_blank">Linux 64-bit</a></li>
+      <div class='row text-center'>
+        <div class='col-lg-4'>
+          <h2>OSX</h2>
+          <a href="/downloads/osx-0.1.0.tar.gz" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-download-alt"></span> OSX 64-bit</a>
+        </div>
 
-    <h2>Windows</h2>
-    <li><a href="/downloads/windows-32-0.1.0.tar.gz" target="_blank">Windows 32-bit</a></li>
-    <li><a href="/downloads/windows-64-0.1.0.tar.gz" target="_blank">Windows 64-bit</a></li>
+        <div class='col-lg-4'>
+          <h2>Linux</h2>
+          <a href="/downloads/linux-32-0.1.0.tar.gz" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-download-alt"></span> Linux 32-bit</a>
+          <a href="/downloads/linux-64-0.1.0.tar.gz" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-download-alt"></span> Linux 64-bit</a>
+        </div>
 
-    <hr>
-    Copyright &copy; 2015 Dillon Hafer
+        <div class='col-lg-4'>
+          <h2>Windows</h2>
+          <a href="/downloads/windows-32-0.1.0.tar.gz" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-download-alt"></span> Windows 32-bit</a>
+          <a href="/downloads/windows-64-0.1.0.tar.gz" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-download-alt"></span> Windows 64-bit</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
