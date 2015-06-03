@@ -14,18 +14,18 @@ You can open the download page with `imdb-tags atomic`
 
 ### Usage
 
-This assumes there's a file called "DOLPHINE_TALE.m4v" in the current directory.
+This assumes there's a file called "song_of_the_sea.m4v" in the current directory.
 
-`imdb-tags -i tt1564349 dolphin_tale.m4v`
+`imdb-tags -i tt1865505 song_of_the_sea.m4v`
 
 If you don't want to open a browser and look for the IMDB Id manually, you can search for it on the command line.
 
-`imdb-tags search "Dolphin Tale"`
+`imdb-tags search "song of the sea"`
 
 This makes it convient to run commands like:
 
 ```bash
 #!/bin/bash
-movie="dolphin_tale.m4v"
-HandBrakeCLI -i /Volumes/DVD/VIDEO_TS -o $movie && imdb-tags -i tt1564349 $movie
+movie="song_of_the_sea.m4v"
+HandBrakeCLI -i /Volumes/DVD/VIDEO_TS -o $movie && imdb-tags -i tt1865505 $movie
 ```
