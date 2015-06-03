@@ -34,7 +34,7 @@ func (t *Tagger) TempId() string {
 
 func (t *Tagger) GetArtwork() {
 	if t.Movie.HasArtwork() {
-		fmt.Printf("Downloading artwork...\n")
+		println("Downloading artwork")
 		file, err := os.Create("artwork.jpg")
 		defer file.Close()
 
@@ -59,28 +59,33 @@ func (t *Tagger) GetArtwork() {
 	}
 }
 
-func (t *Tagger) AtomicCommand() error {
+func (t *Tagger) AtomicCommand() {
 	file_args := []string{t.File.FullPath}
 	args := append(file_args, t.Movie.ParsleyFlags()...)
 
 	if t.Movie.HasArtwork() {
 		artwork := []string{"--artwork", "REMOVE_ALL", "--artwork", "artwork.jpg"}
 		args = append(args, artwork...)
+	} else {
+		println("Could not find artwork")
 	}
 
-	_, err := exec.Command("AtomicParsley", args...).Output()
-	return err
+	if t.Movie.IsValid() {
+		println("Setting tags")
+		exec.Command("AtomicParsley", args...).Output()
+	} else {
+		println("Could not find IMDB info")
+	}
 }
 
 func (t *Tagger) CleanupCommand() {
+	println("Cleaning up tmp files")
 	os.Remove("artwork.jpg")
 	os.Rename(t.TmpFileName(), t.File.FullPath)
 }
 
 func (t *Tagger) SetTags() {
 	t.GetArtwork()
-	fmt.Printf("Setting tags...\n")
 	t.AtomicCommand()
-	fmt.Printf("Cleaning up tmp files...\n")
 	t.CleanupCommand()
 }

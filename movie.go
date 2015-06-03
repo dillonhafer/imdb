@@ -51,7 +51,11 @@ func (m *Movie) Info() string {
 }
 
 func (m *Movie) HasArtwork() bool {
-	return m.ArtworkUrl != ""
+	return m.ArtworkUrl != "" && m.ArtworkUrl != "N/A"
+}
+
+func (m *Movie) IsValid() bool {
+	return m.Title != "" && m.Director != "" && m.Year != "" && m.Description != "" && m.Genre != ""
 }
 
 func FindMovie(id string) Movie {
