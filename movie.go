@@ -8,14 +8,13 @@ import (
 )
 
 type Movie struct {
-	Id          string
+	ImdbId      string `json:"imdbID"`
 	Title       string `json:"Title"`
 	Director    string `json:"Director"`
 	Year        string `json:"Year"`
 	Description string `json:"Plot"`
 	Genre       string `json:"Genre"`
 	ArtworkUrl  string `json:"Poster"`
-	ImdbId      string `json:"imdbID"`
 }
 
 func (m *Movie) GetImdbInfo(url string) {
@@ -30,7 +29,7 @@ func (m *Movie) GetImdbInfo(url string) {
 }
 
 func (m *Movie) ApiUrl() string {
-	query := fmt.Sprintf("i=%s&plot=short&r=json", m.Id)
+	query := fmt.Sprintf("i=%s&plot=short&r=json", m.ImdbId)
 	return BaseApi(query)
 }
 
@@ -56,7 +55,7 @@ func (m *Movie) HasArtwork() bool {
 }
 
 func FindMovie(id string) Movie {
-	m := Movie{Id: id}
+	m := Movie{ImdbId: id}
 	m.GetImdbInfo(m.ApiUrl())
 	return m
 }
