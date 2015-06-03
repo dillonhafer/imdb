@@ -51,10 +51,10 @@ func main() {
 
 	app.Action = func(c *cli.Context) {
 		CheckAtomicParsley()
-		params := GetParams(c)
-		if params.IsValid() {
-			m := FindMovie(params.id)
-			t := &Tagger{Movie: m, Format: params.format, FilePath: params.file}
+		file := NewFile(c)
+		if file.IsValid() {
+			m := FindMovie(file.ImdbId)
+			t := &Tagger{Movie: m, File: file}
 			t.SetTags()
 		} else {
 			cli.ShowAppHelp(c)
@@ -63,23 +63,14 @@ func main() {
 	app.Run(os.Args)
 }
 
-type Params struct {
-	id     string
-	format string
-	file   string
-}
-
-func (p *Params) IsValid() bool {
-	return p.id != "" && p.format != "" && p.file != ""
-}
-
 func AtomicParsleyExists() bool {
 	paths := strings.Split(os.Getenv("PATH"), ":")
 	existence := false
 
 	for _, each := range paths {
 		path := path.Join(each, "AtomicParsley")
-		if _, err := os.Stat(path); err == nil {
+		file := File{FullPath: path}
+		if file.Present() {
 			existence = true
 		}
 	}
@@ -92,18 +83,4 @@ func CheckAtomicParsley() {
 		println("You can open the download page with: `imdb-tags atomic`")
 		os.Exit(1)
 	}
-}
-
-func GetParams(c *cli.Context) Params {
-	var file, format, id string
-
-	if len(c.Args()) == 1 {
-		given_file := c.Args()[0]
-		base := path.Base(given_file)
-		format = path.Ext(given_file)
-
-		file = base[:len(base)-len(format)]
-		id = c.String("id")
-	}
-	return Params{id: id, file: file, format: format}
 }

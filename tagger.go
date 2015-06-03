@@ -11,17 +11,12 @@ import (
 )
 
 type Tagger struct {
-	Movie    Movie
-	FilePath string
-	Format   string
-}
-
-func (t *Tagger) FullFileName() string {
-	return fmt.Sprintf("%s%s", t.FilePath, t.Format)
+	Movie Movie
+	File  File
 }
 
 func (t *Tagger) TmpFileName() string {
-	return fmt.Sprintf("%s%s%s", t.FilePath, t.TempId(), t.Format)
+	return fmt.Sprintf("%s%s%s", t.File.FileName, t.TempId(), t.File.Format)
 }
 
 func (t *Tagger) TempId() string {
@@ -65,7 +60,7 @@ func (t *Tagger) GetArtwork() {
 }
 
 func (t *Tagger) AtomicCommand() error {
-	file_args := []string{t.FullFileName()}
+	file_args := []string{t.File.FullPath}
 	args := append(file_args, t.Movie.ParsleyFlags()...)
 
 	if t.Movie.HasArtwork() {
@@ -79,7 +74,7 @@ func (t *Tagger) AtomicCommand() error {
 
 func (t *Tagger) CleanupCommand() {
 	os.Remove("artwork.jpg")
-	os.Rename(t.TmpFileName(), t.FullFileName())
+	os.Rename(t.TmpFileName(), t.File.FullPath)
 }
 
 func (t *Tagger) SetTags() {
