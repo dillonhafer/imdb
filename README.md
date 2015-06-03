@@ -12,7 +12,7 @@ http://imdb-tags.dillonhafer.com
 
 You must have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
 
-You can open the download page with `imdb-tags atomic`
+You can open the AtomicParsley download page with `imdb-tags atomic`
 
 ### Usage
 
