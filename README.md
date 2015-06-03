@@ -10,7 +10,7 @@ This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.co
 
 You must have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
 
-You can download AtomicParsley with: `imdb-tags atomic`
+You can open the download page with `imdb-tags atomic`
 
 ### Usage
 
