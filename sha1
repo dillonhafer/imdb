@@ -1,0 +1,9 @@
+#!/bin/bash
+
+VERSION=$(grep -oEi "VERSION = \"[^\"]+" main.go | sed s/VERSION\ =\ \"//)
+FILE="v$VERSION.tar.gz"
+URL="https://github.com/dillonhafer/imdb-tags/archive/$FILE"
+curl -O -s $URL
+SHA=$(sha1sum $FILE)
+rm $FILE
+echo $SHA
