@@ -1,0 +1,14 @@
+#!/bin/bash
+
+OLD_VERSION=$(grep -oEi "VERSION = \"[^\"]+" main.go | sed s/VERSION\ =\ \"//)
+if [ $# -eq 1 ]
+then
+    NEW_VERSION=$1
+else
+    echo "No new version supplied"
+    exit 1
+fi
+
+echo "Bumping version from $OLD_VERSION to $NEW_VERSION"
+sed -i.bak s/VERSION\ =\ \"$OLD_VERSION/VERSION\ =\ \"$NEW_VERSION/ main.go && rm main.go.bak
+sed -i.bak s/$OLD_VERSION\.tar\.gz/$NEW_VERSION\.tar\.gz/g website/index.html && rm website/index.html.bak
