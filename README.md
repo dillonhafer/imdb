@@ -6,7 +6,17 @@ This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.co
 
 ### Downloads
 
-http://imdb-tags.dillonhafer.com
+**Linux & Windows**
+
+1. Download archive from http://imdb-tags.dillonhafer.com
+2. Unzip archive into your path (i.e. /usr/local/bin)
+
+**OSX**
+
+```
+brew tap dillonhafer/formulas
+brew install imdb-tags
+```
 
 ### Dependencies
 
