@@ -47,7 +47,7 @@ func (m *Movie) ParsleyFlags() []string {
 }
 
 func (m *Movie) Info() string {
-	return fmt.Sprintf("  Title: %s\n  Director: %s\n  Year: %s\n  Plot: %s\n  IMDB ID: %s", m.Title, m.Director, m.Year, m.Description, m.ImdbId)
+	return fmt.Sprintf("\n  Title: %s\n  Director: %s\n  Year: %s\n  Plot: %s\n  IMDB ID: %s", m.Title, m.Director, m.Year, m.Description, m.ImdbId)
 }
 
 func (m *Movie) HasArtwork() bool {

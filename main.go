@@ -41,7 +41,7 @@ func main() {
 				title := c.Args().First()
 				if title != "" {
 					m := SearchMovie(title)
-					println("Found Possible Match:\n%s", m.Info())
+					println("Found Possible Match:", m.Info())
 				} else {
 					println("No title given")
 				}
