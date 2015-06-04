@@ -4,7 +4,7 @@ A simple and automatic way to set ID3 tags from IMDB, including artwork.
 
 This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.com/) for use with [AtomicParsley](http://atomicparsley.sourceforge.net/).
 
-### Install
+### Installation
 
 **Linux & Windows**
 
