@@ -1,5 +1,5 @@
 #!/bin/bash
 VERSION=$(grep -oEi "VERSION = \"[^\"]+" main.go | sed s/VERSION\ =\ \"//)
 URL="https://github.com/dillonhafer/imdb-tags/archive/v$VERSION.tar.gz"
-SHA=$(curl -s $URL | shasum | sed s/[[:space:]]-//g)
+SHA=$(curl -L -s $URL | shasum | sed s/[[:space:]]-//g)
 echo $SHA
