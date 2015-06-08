@@ -19,24 +19,24 @@ func (f *File) IsValid() bool {
 
 // Is the file is present on disk
 func (f *File) Present() bool {
-	return file_exists(f.FullPath)
+	return fileExists(f.FullPath)
 }
 
 func NewFile(c *cli.Context) File {
-	var file_name, format, id, full_path string
+	var fileName, format, id, fullPath string
 
 	if len(c.Args()) == 1 {
-		full_path = c.Args()[0]
-		base := path.Base(full_path)
-		format = path.Ext(full_path)
+		fullPath = c.Args()[0]
+		base := path.Base(fullPath)
+		format = path.Ext(fullPath)
 
-		file_name = base[:len(base)-len(format)]
+		fileName = base[:len(base)-len(format)]
 		id = c.String("id")
 	}
-	return File{ImdbId: id, FileName: file_name, Format: format, FullPath: full_path}
+	return File{ImdbId: id, FileName: fileName, Format: format, FullPath: fullPath}
 }
 
-func file_exists(path string) bool {
+func fileExists(path string) bool {
 	exists := false
 	if _, err := os.Stat(path); err == nil {
 		exists = true
