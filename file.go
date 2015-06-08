@@ -17,7 +17,7 @@ func (f *File) IsValid() bool {
 	return f.ImdbID != "" && f.Present()
 }
 
-// Is the file is present on disk
+// Present checks to see if the file is present on disk.
 func (f *File) Present() bool {
 	return fileExists(f.FullPath)
 }
