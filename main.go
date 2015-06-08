@@ -53,7 +53,7 @@ func main() {
 		CheckAtomicParsley()
 		file := NewFile(c)
 		if file.IsValid() {
-			m := FindMovie(file.ImdbId)
+			m := FindMovie(file.ImdbID)
 			t := &Tagger{Movie: m, File: file}
 			t.SetTags()
 		} else {

@@ -7,14 +7,14 @@ import (
 )
 
 type File struct {
-	ImdbId   string
+	ImdbID   string
 	Format   string
 	FileName string
 	FullPath string
 }
 
 func (f *File) IsValid() bool {
-	return f.ImdbId != "" && f.Present()
+	return f.ImdbID != "" && f.Present()
 }
 
 // Is the file is present on disk
@@ -33,7 +33,7 @@ func NewFile(c *cli.Context) File {
 		fileName = base[:len(base)-len(format)]
 		id = c.String("id")
 	}
-	return File{ImdbId: id, FileName: fileName, Format: format, FullPath: fullPath}
+	return File{ImdbID: id, FileName: fileName, Format: format, FullPath: fullPath}
 }
 
 func fileExists(path string) bool {
