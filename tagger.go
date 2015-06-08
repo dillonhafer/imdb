@@ -16,20 +16,20 @@ type Tagger struct {
 }
 
 func (t *Tagger) TmpFileName() string {
-	return fmt.Sprintf("%s%s%s", t.File.FileName, t.TempId(), t.File.Format)
+	return fmt.Sprintf("%s%s%s", t.File.FileName, t.TempID(), t.File.Format)
 }
 
-func (t *Tagger) TempId() string {
-	var file_id string
+func (t *Tagger) TempID() string {
+	var fileID string
 	pwd, _ := os.Getwd()
 	files, _ := ioutil.ReadDir(pwd)
 	for _, f := range files {
 		r, _ := regexp.Compile("-temp-([0-9]+)")
 		if r.MatchString(f.Name()) {
-			file_id = r.FindString(f.Name())
+			fileID = r.FindString(f.Name())
 		}
 	}
-	return file_id
+	return fileID
 }
 
 func (t *Tagger) GetArtwork() {
@@ -60,8 +60,8 @@ func (t *Tagger) GetArtwork() {
 }
 
 func (t *Tagger) AtomicCommand() {
-	file_args := []string{t.File.FullPath}
-	args := append(file_args, t.Movie.ParsleyFlags()...)
+	fileArgs := []string{t.File.FullPath}
+	args := append(fileArgs, t.Movie.ParsleyFlags()...)
 
 	if t.Movie.HasArtwork() {
 		artwork := []string{"--artwork", "REMOVE_ALL", "--artwork", "artwork.jpg"}
