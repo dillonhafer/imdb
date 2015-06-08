@@ -1,3 +1,4 @@
+// Package main provides an automatic way to set mp4v2 tags from IMDb
 package main
 
 import (
