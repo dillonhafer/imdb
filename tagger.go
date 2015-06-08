@@ -45,7 +45,7 @@ func (t *Tagger) GetArtwork() {
 			},
 		}
 
-		resp, err := check.Get(t.Movie.ArtworkUrl) // add a filter to check redirect
+		resp, err := check.Get(t.Movie.ArtworkURL) // add a filter to check redirect
 		if err != nil {
 			fmt.Println(err)
 			panic(err)

@@ -8,13 +8,13 @@ import (
 )
 
 type Movie struct {
-	ImdbId      string `json:"imdbID"`
+	ImdbID      string `json:"imdbID"`
 	Title       string `json:"Title"`
 	Director    string `json:"Director"`
 	Year        string `json:"Year"`
 	Description string `json:"Plot"`
 	Genre       string `json:"Genre"`
-	ArtworkUrl  string `json:"Poster"`
+	ArtworkURL  string `json:"Poster"`
 }
 
 func (m *Movie) GetImdbInfo(url string) {
@@ -28,17 +28,17 @@ func (m *Movie) GetImdbInfo(url string) {
 	}
 }
 
-func (m *Movie) ApiUrl() string {
-	query := fmt.Sprintf("i=%s&plot=short&r=json", m.ImdbId)
-	return BaseApi(query)
+func (m *Movie) APIURL() string {
+	query := fmt.Sprintf("i=%s&plot=short&r=json", m.ImdbID)
+	return BaseAPI(query)
 }
 
-func (m *Movie) SearchApiUrl() string {
+func (m *Movie) SearchAPIURL() string {
 	query := fmt.Sprintf("t=%s&plot=short&r=json", url.QueryEscape(m.Title))
-	return BaseApi(query)
+	return BaseAPI(query)
 }
 
-func BaseApi(q string) string {
+func BaseAPI(q string) string {
 	return fmt.Sprintf("http://www.omdbapi.com/?%s", q)
 }
 
@@ -47,11 +47,11 @@ func (m *Movie) ParsleyFlags() []string {
 }
 
 func (m *Movie) Info() string {
-	return fmt.Sprintf("\n  Title: %s\n  Director: %s\n  Year: %s\n  Plot: %s\n  IMDB ID: %s", m.Title, m.Director, m.Year, m.Description, m.ImdbId)
+	return fmt.Sprintf("\n  Title: %s\n  Director: %s\n  Year: %s\n  Plot: %s\n  IMDB ID: %s", m.Title, m.Director, m.Year, m.Description, m.ImdbID)
 }
 
 func (m *Movie) HasArtwork() bool {
-	return m.ArtworkUrl != "" && m.ArtworkUrl != "N/A"
+	return m.ArtworkURL != "" && m.ArtworkURL != "N/A"
 }
 
 func (m *Movie) IsValid() bool {
@@ -59,13 +59,13 @@ func (m *Movie) IsValid() bool {
 }
 
 func FindMovie(id string) Movie {
-	m := Movie{ImdbId: id}
-	m.GetImdbInfo(m.ApiUrl())
+	m := Movie{ImdbID: id}
+	m.GetImdbInfo(m.APIURL())
 	return m
 }
 
 func SearchMovie(title string) Movie {
 	m := Movie{Title: title}
-	m.GetImdbInfo(m.SearchApiUrl())
+	m.GetImdbInfo(m.SearchAPIURL())
 	return m
 }
