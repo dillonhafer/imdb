@@ -8,7 +8,6 @@ import (
 	"runtime"
 
 	"github.com/codegangsta/cli"
-	"github.com/toqueteos/webbrowser"
 )
 
 const VERSION = "0.6.0"
@@ -31,14 +30,6 @@ func main() {
 	}
 
 	app.Commands = []cli.Command{
-		{
-			Name:    "atomic",
-			Aliases: []string{"a"},
-			Usage:   "Open the download page for AtomicParsley",
-			Action: func(c *cli.Context) {
-				webbrowser.Open("http://sourceforge.net/projects/atomicparsley/files/atomicparsley/AtomicParsley%20v0.9.0/")
-			},
-		},
 		{
 			Name:    "search",
 			Aliases: []string{"s"},
