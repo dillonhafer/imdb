@@ -2,9 +2,10 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
 	"os"
-	"path/filepath"
-	"strings"
+	"runtime"
 
 	"github.com/codegangsta/cli"
 	"github.com/toqueteos/webbrowser"
@@ -13,6 +14,7 @@ import (
 const VERSION = "0.5.0"
 
 var API_KEY = os.Getenv("API_KEY")
+var AtomicParsley = "atomic-parsley"
 
 func main() {
 	app := cli.NewApp()
@@ -54,8 +56,11 @@ func main() {
 	}
 
 	app.Action = func(c *cli.Context) {
-		CheckAtomicParsley()
 		VerifyApiKey()
+
+		ExtractAtomicParsley()
+		defer RemoveAtomicParsley()
+
 		file := NewFile(c)
 		if file.IsValid() {
 			m := FindMovie(file.ImdbID)
@@ -68,32 +73,54 @@ func main() {
 	app.Run(os.Args)
 }
 
-func AtomicParsleyExists() bool {
-	separator := string(os.PathListSeparator)
-	paths := strings.Split(os.Getenv("PATH"), separator)
-	existence := false
-
-	for _, dir := range paths {
-		fullPath := filepath.Join(dir, "AtomicParsley")
-		file := File{FullPath: fullPath}
-		if file.Present() {
-			existence = true
-		}
+func ExtractAtomicParsley() {
+	var assetFolder string
+	switch os := runtime.GOOS; os {
+	case "windows":
+		assetFolder = "bin/windows/AtomicParsley.exe"
+		AtomicParsley = AtomicParsley + ".exe"
+	case "darwin":
+		assetFolder = "bin/osx/AtomicParsley"
+	case "linux":
+		assetFolder = "bin/linux/AtomicParsley"
+	default:
+		fmt.Printf("Your operating system is not supported:", os)
 	}
-	return existence
+
+	if assetFolder == "" {
+		os.Exit(1)
+	}
+
+	data, err := Asset(assetFolder)
+	if err != nil {
+		println("Could not extract AtomicParsley.")
+		os.Exit(1)
+	}
+
+	err = ioutil.WriteFile(AtomicParsley, data, 0744)
+	if err != nil {
+		println("Could create AtomicParsley file")
+		os.Exit(1)
+	}
 }
 
-func CheckAtomicParsley() {
-	if !AtomicParsleyExists() {
-		println("AtomicParsley is missing")
-		println("You can open the download page with: `imdb-tags atomic`")
-		os.Exit(1)
+func RemoveAtomicParsley() {
+	err := os.Remove(AtomicParsley)
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
 }
 
 func VerifyApiKey() {
 	if API_KEY == "" {
-		println("You must provide an API key (e.g. API_KEY=xxxxxxxx imdb-tags -i tt1564349 path/to/movie.mp4)")
+		switch os := runtime.GOOS; os {
+		case "windows":
+			println("You must provide an API key (e.g. \nset API_KEY=xxxxxxxx\nimdb-tags -i tt1564349 path/to/movie.mp4)")
+		default:
+			println("You must provide an API key (e.g. API_KEY=xxxxxxxx imdb-tags -i tt1564349 path/to/movie.mp4)")
+		}
+
 		println("You can request a free one at `http://www.omdbapi.com/apikey.aspx`")
 		os.Exit(1)
 	}

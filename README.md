@@ -18,17 +18,11 @@ brew tap dillonhafer/formulas
 brew install imdb-tags
 ```
 
-### Dependencies
-
-You must have [AtomicParsley](http://atomicparsley.sourceforge.net/) in your path.
-
-You can open the AtomicParsley download page with `imdb-tags atomic`
-
 ### Usage
 
 This assumes there's a file called "song_of_the_sea.m4v" in the current directory.
 
-`imdb-tags -i tt1865505 song_of_the_sea.m4v`
+`API_KEY=xxxxxx imdb-tags -i tt1865505 song_of_the_sea.m4v`
 
 If you don't want to open a browser and look for the IMDB Id manually, you can search for it on the command line.
 

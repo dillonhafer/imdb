@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 )
 
@@ -71,8 +73,13 @@ func (t *Tagger) AtomicCommand() {
 	}
 
 	if t.Movie.IsValid() {
-		println("Setting tags")
-		exec.Command("AtomicParsley", args...).Output()
+		pwd, _ := os.Getwd()
+		ap := filepath.Join(pwd, AtomicParsley)
+		out, err := exec.Command(ap, args...).Output()
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s\n", out)
 	} else {
 		println("Could not find IMDB info")
 	}
@@ -85,7 +92,7 @@ func (t *Tagger) CleanupCommand() {
 }
 
 func (t *Tagger) SetTags() {
+	defer t.CleanupCommand()
 	t.GetArtwork()
 	t.AtomicCommand()
-	t.CleanupCommand()
 }
