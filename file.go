@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/codegangsta/cli"
 	"os"
 	"path"
+
+	"github.com/codegangsta/cli"
 )
 
 type File struct {

@@ -2,11 +2,12 @@
 package main
 
 import (
-	"github.com/codegangsta/cli"
-	"github.com/toqueteos/webbrowser"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/codegangsta/cli"
+	"github.com/toqueteos/webbrowser"
 )
 
 const VERSION = "0.4.2"
@@ -65,11 +66,12 @@ func main() {
 }
 
 func AtomicParsleyExists() bool {
-	paths := strings.Split(os.Getenv("PATH"), ":")
+	separator := string(os.PathListSeparator)
+	paths := strings.Split(os.Getenv("PATH"), separator)
 	existence := false
 
-	for _, each := range paths {
-		path := path.Join(each, "AtomicParsley")
+	for _, dir := range paths {
+		path := path.Join(dir, "AtomicParsley")
 		file := File{FullPath: path}
 		if file.Present() {
 			existence = true
