@@ -3,7 +3,7 @@ package main
 
 import (
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/codegangsta/cli"
@@ -11,6 +11,8 @@ import (
 )
 
 const VERSION = "0.5.0"
+
+var API_KEY = os.Getenv("API_KEY")
 
 func main() {
 	app := cli.NewApp()
@@ -53,6 +55,7 @@ func main() {
 
 	app.Action = func(c *cli.Context) {
 		CheckAtomicParsley()
+		VerifyApiKey()
 		file := NewFile(c)
 		if file.IsValid() {
 			m := FindMovie(file.ImdbID)
@@ -71,8 +74,8 @@ func AtomicParsleyExists() bool {
 	existence := false
 
 	for _, dir := range paths {
-		path := path.Join(dir, "AtomicParsley")
-		file := File{FullPath: path}
+		fullPath := filepath.Join(dir, "AtomicParsley")
+		file := File{FullPath: fullPath}
 		if file.Present() {
 			existence = true
 		}
@@ -84,6 +87,14 @@ func CheckAtomicParsley() {
 	if !AtomicParsleyExists() {
 		println("AtomicParsley is missing")
 		println("You can open the download page with: `imdb-tags atomic`")
+		os.Exit(1)
+	}
+}
+
+func VerifyApiKey() {
+	if API_KEY == "" {
+		println("You must provide an API key (e.g. API_KEY=xxxxxxxx imdb-tags -i tt1564349 path/to/movie.mp4)")
+		println("You can request a free one at `http://www.omdbapi.com/apikey.aspx`")
 		os.Exit(1)
 	}
 }

@@ -39,7 +39,7 @@ func (m *Movie) SearchAPIURL() string {
 }
 
 func BaseAPI(q string) string {
-	return fmt.Sprintf("http://www.omdbapi.com/?%s", q)
+	return fmt.Sprintf("http://www.omdbapi.com/?apikey=%s&%s", API_KEY, q)
 }
 
 func (m *Movie) ParsleyFlags() []string {
