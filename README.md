@@ -8,7 +8,7 @@ This program gets IMDB info from [The Open Movie Database](http://www.omdbapi.co
 
 **Linux & Windows**
 
-1. Download archive from http://imdb-tags.dillonhafer.com
+1. Download archive from https://dillonhafer.github.io/imdb-tags
 2. Unzip archive into your path (i.e. /usr/local/bin)
 
 **OSX**
