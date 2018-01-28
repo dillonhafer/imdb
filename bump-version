@@ -5,10 +5,11 @@ if [ $# -eq 1 ]
 then
     NEW_VERSION=$1
 else
-    echo "No new version supplied"
+    echo "No new version supplied. Current Version: $OLD_VERSION"
     exit 1
 fi
 
 echo "Bumping version from $OLD_VERSION to $NEW_VERSION"
 sed -i.bak s/VERSION\ =\ \"$OLD_VERSION/VERSION\ =\ \"$NEW_VERSION/ main.go && rm main.go.bak
-sed -i.bak s/$OLD_VERSION\.tar\.gz/$NEW_VERSION\.tar\.gz/g website/index.html && rm website/index.html.bak
+sed -i.bak s/$OLD_VERSION\.tar\.gz/$NEW_VERSION\.tar\.gz/g docs/index.html && rm docs/index.html.bak
+sed -i.bak s/v$OLD_VERSION/v$NEW_VERSION/g docs/index.html && rm docs/index.html.bak
