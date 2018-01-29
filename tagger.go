@@ -21,10 +21,15 @@ func (t *Tagger) TmpFileName() string {
 	return fmt.Sprintf("%s%s%s", t.File.FileName, t.TempID(), t.File.Format)
 }
 
+func (t *Tagger) FullTmpFileName() string {
+	fullPath := filepath.Dir(t.File.FullPath)
+	return filepath.Join(fullPath, t.TmpFileName())
+}
+
 func (t *Tagger) TempID() string {
+	dir := filepath.Dir(t.File.FullPath)
 	var fileID string
-	pwd, _ := os.Getwd()
-	files, _ := ioutil.ReadDir(pwd)
+	files, _ := ioutil.ReadDir(dir)
 	for _, f := range files {
 		r, _ := regexp.Compile("-temp-([0-9]+)")
 		if r.MatchString(f.Name()) {
@@ -88,7 +93,7 @@ func (t *Tagger) AtomicCommand() {
 func (t *Tagger) CleanupCommand() {
 	println("Cleaning up tmp files")
 	os.Remove("artwork.jpg")
-	os.Rename(t.TmpFileName(), t.File.FullPath)
+	os.Rename(t.FullTmpFileName(), t.File.FullPath)
 }
 
 func (t *Tagger) SetTags() {
