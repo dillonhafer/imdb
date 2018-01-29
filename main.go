@@ -10,7 +10,7 @@ import (
 	"github.com/codegangsta/cli"
 )
 
-const VERSION = "0.6.0"
+const VERSION = "0.6.1"
 
 var API_KEY = os.Getenv("API_KEY")
 var AtomicParsley = "atomic-parsley"
