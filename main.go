@@ -54,7 +54,12 @@ func main() {
 
 		file := NewFile(c)
 		if file.IsValid() {
-			m := FindMovie(file.ImdbID)
+			m, err := FindMovie(file.ImdbID)
+			if err != nil {
+				fmt.Print(err)
+				return
+			}
+
 			t := &Tagger{Movie: m, File: file}
 			t.SetTags()
 		} else {

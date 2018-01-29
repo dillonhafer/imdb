@@ -17,15 +17,22 @@ type Movie struct {
 	ArtworkURL  string `json:"Poster"`
 }
 
-func (m *Movie) GetImdbInfo(url string) {
+func (m *Movie) GetImdbInfo(url string) error {
 	res, err := http.Get(url)
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
+
+	if res.StatusCode == 401 {
+		return fmt.Errorf("Incorrect, Invalid, or Unactivated API key.\nBe sure to activate the api key by email.\n")
+	}
+
 	err = json.NewDecoder(res.Body).Decode(&m)
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
+
+	return nil
 }
 
 func (m *Movie) APIURL() string {
@@ -58,10 +65,10 @@ func (m *Movie) IsValid() bool {
 	return m.Title != "" && m.Director != "" && m.Year != "" && m.Description != "" && m.Genre != ""
 }
 
-func FindMovie(id string) Movie {
+func FindMovie(id string) (Movie, error) {
 	m := Movie{ImdbID: id}
-	m.GetImdbInfo(m.APIURL())
-	return m
+	err := m.GetImdbInfo(m.APIURL())
+	return m, err
 }
 
 func SearchMovie(title string) Movie {
